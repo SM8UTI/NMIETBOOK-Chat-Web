@@ -1,8 +1,24 @@
+import { useState } from "react";
 import logo from "../Assets/LogoName.svg";
 import profile from "../Assets/profile.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [file, setFile] = useState();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const username = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    const file = e.target[3].files[0];
+
+    console.log(username, email, password, file);
+  };
+
   return (
     <div className="Register min-h-screen grid content-center p-4">
       <div className="container flex items-center flex-col gap-4 bg-white mx-auto p-8 rounded-lg w-full sm:max-w-[450px] ">
@@ -19,7 +35,7 @@ const Register = () => {
           </h1>
           <p className="text-base opacity-75">😃 Sign up and 💬 Chat </p>
         </div>
-        <form className="flex flex-col gap-4 w-full">
+        <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
             <label htmlFor="userName" className="text-sm opacity-80">
               User Name
@@ -53,7 +69,7 @@ const Register = () => {
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black w-full "
             />
           </div>
-          <div className="max-w-fit ">
+          <div className=" flex flex-row items-center justify-between">
             <label
               htmlFor="image"
               className="flex flex-row items-center gap-2 cursor-pointer"
@@ -65,7 +81,15 @@ const Register = () => {
               />
               <span className="opacity-80">Add an Avatar</span>
             </label>
-            <input type="file" id="image" className="hidden" />
+            {file && <span>✅ Uploaded</span>}
+            <input
+              type="file"
+              id="image"
+              className="hidden"
+              onChange={(e) => {
+                setFile(e.target.value);
+              }}
+            />
           </div>
           <button
             type="submit"
@@ -74,6 +98,9 @@ const Register = () => {
             Register
           </button>
         </form>
+        {error && (
+          <span className="text-base text-red-500">Something is Wrong!!!</span>
+        )}
         <div>
           <h4 className="font-normal text-sm">
             Do have any account?

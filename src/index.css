@@ -8,8 +8,13 @@ body {
   color: #06100b;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 .Register,
-.login {
+.login,
+.Home {
   background-color: #85ffbd;
   background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
 }
@@ -20,7 +25,8 @@ body {
 }
 
 .Register .container,
-.login .container {
+.login .container,
+.Home .container {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
@@ -34,7 +40,39 @@ body {
 .Register button:focus,
 .Register button:hover,
 .login button:hover,
-.login button:focus {
+.login button:focus,
+.Input button:focus,
+.Input button:hover {
   outline: none;
   box-shadow: 0 0 0 4px #1d633fb9;
+}
+
+.Sidebar {
+  flex: 1;
+  background: linear-gradient(45deg, #10673a 0%, #079b4f 100%);
+  color: #fff;
+  box-shadow: inset -14px 0px 26px rgba(0, 0, 0, 0.25);
+}
+
+.Chat {
+  flex: 2;
+}
+
+.Message.owner {
+  flex-direction: row-reverse;
+}
+
+.Message.owner .content {
+  background-color: #1d633f;
+  color: #fff;
+  border-radius: 1rem 0 1rem 1rem !important;
+}
+
+.Message .content{
+  border-radius: 0 1rem 1rem 1rem;
+}
+
+.Message .content img {
+  max-width: 200px;
+  border-radius: 0.5rem;
 }
