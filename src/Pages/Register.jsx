@@ -1,21 +1,22 @@
-import React from "react";
 import logo from "../Assets/LogoName.svg";
 import profile from "../Assets/profile.svg";
 import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
-    <div className="Register min-h-screen grid content-center  bg-lightPrimary p-4">
+    <div className="Register min-h-screen grid content-center p-4">
       <div className="container flex items-center flex-col gap-4 bg-white mx-auto p-8 rounded-lg w-full sm:max-w-[450px] ">
         <div className="logo ">
           <img
             src={logo}
             alt="NMIETBOOK"
-            className="w-[180px] object-contain"
+            className="w-[150px] sm:w-[180px] object-contain"
           />
         </div>
         <div className="text flex flex-col items-center gap-1 text-center">
-          <h1 className="text-3xl font-semibold">Create Your Account</h1>
+          <h1 className="text-2xl sm:text-3xl font-semibold">
+            Create Your Account
+          </h1>
           <p className="text-base opacity-75">😃 Sign up and 💬 Chat </p>
         </div>
         <form className="flex flex-col gap-4 w-full">
@@ -60,7 +61,7 @@ const Register = () => {
               <img
                 src={profile}
                 alt="profile choose"
-                className="w-[60px] aspect-square object-contain"
+                className="w-[60px] aspect-square object-contain rounded-full"
               />
               <span className="opacity-80">Add an Avatar</span>
             </label>
@@ -75,8 +76,11 @@ const Register = () => {
         </form>
         <div>
           <h4 className="font-normal text-sm">
-            Don't have any account?
-            <Link to={"/login"} className="text-primary font-medium underline ml-1">
+            Do have any account?
+            <Link
+              to={"/login"}
+              className="text-primary font-medium underline ml-1"
+            >
               Login
             </Link>
           </h4>
