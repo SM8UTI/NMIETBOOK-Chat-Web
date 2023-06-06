@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: #06100b;
+}
+
+.Register > * {
+  transition: all 0.6s cubic-bezier(0.18, 0.37, 0.42, 1.01);
+}
+
+.Register .container {
+  box-shadow: 0 0 0 10px #1d633f33;
+}
+
+.Register input:focus {
+  border: 2px solid transparent;
+  outline: none;
+  box-shadow: 0 0 0 4px #1d633fb9;
+}
+.Register button:focus,
+.Register button:hover {
+  outline: none;
+  box-shadow: 0 0 0 4px #1d633fb9;
+}
+
+.Register label:focus {
+  color: #06100b;
+}
