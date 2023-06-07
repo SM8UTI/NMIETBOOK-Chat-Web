@@ -7,7 +7,7 @@ const Input = () => {
     <div className="Input p-4 w-full shadow-[0px_-1px_3px_0px_#00000024]">
       <form className="w-full flex flex-row items-center gap-2">
         <div className="w-full flex text-base items-center gap-2">
-          <AiOutlineMessage className="text-xl text-[#06100bc2]" />
+          <AiOutlineMessage className="text-xl text-[#06100bc2] shrink-0" />
           <input
             type="text"
             placeholder="Message..."

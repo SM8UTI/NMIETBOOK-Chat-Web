@@ -48,14 +48,16 @@ body {
 }
 
 .Sidebar {
-  flex: 1;
+  /* flex: 1; */
   background: linear-gradient(45deg, #10673a 0%, #079b4f 100%);
   color: #fff;
   box-shadow: inset -14px 0px 26px rgba(0, 0, 0, 0.25);
+  /* width: 30%; */
 }
 
 .Chat {
-  flex: 2;
+  /* flex: 2; */
+  /* width: 70%; */
 }
 
 .Message.owner {
@@ -68,11 +70,19 @@ body {
   border-radius: 1rem 0 1rem 1rem !important;
 }
 
-.Message .content{
+.Message .content {
   border-radius: 0 1rem 1rem 1rem;
 }
 
 .Message .content img {
   max-width: 200px;
   border-radius: 0.5rem;
+  margin-inline: auto;
+  /* display: none; */
+}
+
+@media (max-width: 470px) {
+  .Message .content img {
+    max-width: 100px;
+  }
 }
