@@ -1,6 +1,6 @@
 import { BsThreeDotsVertical } from "react-icons/bs";
 import MessagesContainer from "./MessagesContainer";
-import Input from "./input";
+import Input from "./Input";
 
 const Chat = () => {
   return (
