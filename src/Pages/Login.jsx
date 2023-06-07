@@ -25,7 +25,7 @@ const Login = () => {
       const res = await signInWithEmailAndPassword(auth, email, password);
       console.log(res.user);
       dispatch(updateUser(res.user));
-      toast("Welcome Back!", {
+      toast(`Welcome Back!, ${res.user.displayName}`, {
         icon: "🙏",
       });
 

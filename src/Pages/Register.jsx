@@ -90,6 +90,7 @@ const Register = () => {
               id="userName"
               placeholder="John123"
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black  w-full"
+              required
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -101,6 +102,7 @@ const Register = () => {
               id="email"
               placeholder="John123@gmail.com"
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black w-full "
+              required
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -112,6 +114,7 @@ const Register = () => {
               id="password"
               placeholder="*****"
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black w-full "
+              required
             />
           </div>
           <div className=" flex flex-row items-center justify-between">
