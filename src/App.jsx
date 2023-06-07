@@ -6,11 +6,6 @@ const App = () => {
   return (
     <>
       <Outlet />
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        containerStyle={{ fontSize: "0.9rem"}}
-      />
     </>
   );
 };

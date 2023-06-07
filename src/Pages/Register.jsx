@@ -2,21 +2,66 @@ import { useState } from "react";
 import logo from "../Assets/LogoName.svg";
 import profile from "../Assets/profile.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
+import { auth, db, storage } from "../Firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+import { doc, setDoc } from "firebase/firestore";
+import { ThreeDots } from "react-loader-spinner";
 
 const Register = () => {
-  const [file, setFile] = useState();
+  const [files, setFiles] = useState();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    const username = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
+    const username = e.target[0].value.trim();
+    const email = e.target[1].value.trim();
+    const password = e.target[2].value.trim();
     const file = e.target[3].files[0];
 
-    console.log(username, email, password, file);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      const data = new Date().getTime();
+      const storageRef = ref(storage, `${username + data}`);
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateProfile(res.user, {
+              displayName: username,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName: username,
+              email: email,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+
+            navigate("/login");
+          } catch (error) {
+            console.log(error);
+            setError(true);
+            setLoading(false);
+            toast.error("Something Went Wrong !!!");
+          }
+        });
+      });
+    } catch (error) {
+      setError(true);
+      setLoading(false);
+      toast.error("Something Went Wrong !!!");
+    }
   };
 
   return (
@@ -81,23 +126,44 @@ const Register = () => {
               />
               <span className="opacity-80">Add an Avatar</span>
             </label>
-            {file && <span>✅ Uploaded</span>}
+            {files && <span>✅ Uploaded</span>}
             <input
               type="file"
               id="image"
               className="hidden"
               onChange={(e) => {
-                setFile(e.target.value);
+                setFiles(e.target.value);
               }}
+              required
             />
           </div>
           <button
             type="submit"
             className="bg-primary text-white py-3 rounded-md"
+            disabled={loading}
           >
-            Register
+            {loading ? (
+              <div className="grid place-content-center">
+                <ThreeDots
+                  height="30"
+                  width="40"
+                  radius="9"
+                  color="#fff"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  visible={true}
+                />
+              </div>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
+        {loading && (
+          <span className="text-sm text-center max-w-[300px] text-green-800">
+            Uploading and Compressing the image please wait...
+          </span>
+        )}
         {error && (
           <span className="text-base text-red-500">Something is Wrong!!!</span>
         )}

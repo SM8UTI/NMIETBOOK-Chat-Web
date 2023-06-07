@@ -12,7 +12,7 @@ const Chat = ({ sideBarModal, setSideBarModal }) => {
     >
       <div
         className={`chatInfo px-4 py-4 flex flex-row items-center justify-between ${
-          sideBarModal ? "opacity-0" : "opacity-100"
+          sideBarModal ? "opacity-0 sm:opacity-100" : "opacity-100"
         } transition-all duration-400 ease-in-out`}
       >
         <div className="chatName">
