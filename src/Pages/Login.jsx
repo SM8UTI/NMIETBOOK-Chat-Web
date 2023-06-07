@@ -23,7 +23,8 @@ const Login = () => {
 
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(updateUser(res.user.uid));
+      console.log(res.user);
+      dispatch(updateUser(res.user));
       toast("Welcome Back!", {
         icon: "🙏",
       });

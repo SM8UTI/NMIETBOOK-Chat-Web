@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../Store/Slice/MainSlice";
 import { toast } from "react-hot-toast";
+import { signOut } from "firebase/auth";
+import { auth } from "../Firebase";
 
 const NavBar = () => {
   const [menuSetting, setMenuSetting] = useState(false);
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.Main.user);
+
   return (
     <div className="NavBar flex items-center justify-between">
       <div className="profile flex flex-row gap-2 items-center text-xl ">
         <img
-          src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=461&q=80"
-          alt="profile img shrink-0"
-          className="w-[50px] aspect-square rounded-full object-cover shadow-sm"
+          src={user.photoURL}
+          className="w-[50px] aspect-square rounded-full object-cover shadow-sm border-2 border-white"
         />
-        <h3>Sakshi</h3>
+        <h3>{user.displayName}</h3>
       </div>
       <div className="relative">
         <button
@@ -31,6 +35,7 @@ const NavBar = () => {
             <li
               className="px-4 py-1 hover:bg-[#ffffff17] cursor-pointer transition ease-in-out delay-150 rounded-sm "
               onClick={() => {
+                signOut(auth);
                 dispatch(updateUser(undefined));
                 toast("Succesful LogOut!!!", {
                   icon: "😊",

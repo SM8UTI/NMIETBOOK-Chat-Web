@@ -7,14 +7,6 @@ const ChatsProfile = () => {
       <UserChat />
       <UserChat />
       <UserChat />
-      <UserChat />
-      <UserChat />
-      <UserChat />
-      <UserChat />
-      <UserChat />
-      <UserChat />
-      <UserChat />
-      <UserChat />
     </div>
   );
 };
