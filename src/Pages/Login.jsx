@@ -24,7 +24,9 @@ const Login = () => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
       dispatch(updateUser(res.user.uid));
-      toast.success(`Welcome Back`);
+      toast("Welcome Back!", {
+        icon: "🙏",
+      });
 
       navigate("/");
     } catch (error) {
