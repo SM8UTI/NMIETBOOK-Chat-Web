@@ -16,7 +16,7 @@ const NavBar = () => {
     <div className="NavBar flex items-center justify-between">
       <div className="profile flex flex-row gap-2 items-center text-xl ">
         <img
-          src={user.photoURL}
+          src={user.photoUrl}
           className="w-[50px] aspect-square rounded-full object-cover shadow-sm border-2 border-white"
         />
         <h3>{user.displayName}</h3>

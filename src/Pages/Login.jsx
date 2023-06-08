@@ -18,13 +18,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const email = e.target[0].value.trim();
+    const email = e.target[0].value.trim().toLowerCase();
     const password = e.target[1].value.trim();
 
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
-      console.log(res.user);
-      dispatch(updateUser(res.user));
+      dispatch(updateUser(res.user.reloadUserInfo));
       toast(`Welcome Back!, ${res.user.displayName}`, {
         icon: "🙏",
       });

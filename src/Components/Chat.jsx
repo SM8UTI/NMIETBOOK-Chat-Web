@@ -7,7 +7,7 @@ const Chat = ({ sideBarModal, setSideBarModal }) => {
   return (
     <div
       className={`Chat flex flex-col relative overflow-hidden transition-all duration-600 ease-in-out ${
-        sideBarModal ? "w-[30%] sm:w-[70%]" : "w-[100%]"
+        sideBarModal ? "w-[30%] sm:w-[60%] md:w-[70%]" : "w-[100%]"
       }`}
     >
       <div

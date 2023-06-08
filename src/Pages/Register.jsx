@@ -21,8 +21,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const username = e.target[0].value.trim();
-    const email = e.target[1].value.trim();
+    const username = e.target[0].value.trim().toLowerCase();
+    const email = e.target[1].value.trim().toLowerCase();
     const password = e.target[2].value.trim();
     const file = e.target[3].files[0];
 
