@@ -1,9 +1,13 @@
+/* eslint-disable react/prop-types */
 import { BsThreeDotsVertical } from "react-icons/bs";
 import MessagesContainer from "./MessagesContainer";
 import Input from "./Input";
 import { MdSwipeLeftAlt } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const Chat = ({ sideBarModal, setSideBarModal }) => {
+  const userChats = useSelector((state) => state.chat);
+
   return (
     <div
       className={`Chat flex flex-col relative overflow-hidden transition-all duration-600 ease-in-out ${
@@ -16,7 +20,9 @@ const Chat = ({ sideBarModal, setSideBarModal }) => {
         } transition-all duration-400 ease-in-out`}
       >
         <div className="chatName">
-          <h3 className="text-xl font-semibold">Prabin</h3>
+          <h3 className="text-xl font-semibold">
+            {userChats?.user?.displayName}
+          </h3>
         </div>
         <div className="groups text-xl">
           <BsThreeDotsVertical />
