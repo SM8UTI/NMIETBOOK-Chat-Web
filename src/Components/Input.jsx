@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 import { AiOutlineMessage } from "react-icons/ai";
-import { MdOutlineAttachFile } from "react-icons/md";
+import { BsImage } from "react-icons/bs";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import { db, storage } from "../Firebase";
 import { useSelector } from "react-redux";
@@ -96,7 +96,7 @@ const Input = () => {
             htmlFor="file"
             className="text-xl cursor-pointer  text-[#06100bc2]"
           >
-            <MdOutlineAttachFile />
+            <BsImage />
           </label>
           <input
             type="file"

@@ -1,11 +1,16 @@
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
+import { RiFolderDownloadFill } from "react-icons/ri";
+
 import { differenceInSeconds, format, formatDistanceToNow } from "date-fns";
+import { Link } from "react-router-dom";
 
 const Message = ({ message }) => {
   const userChats = useSelector((state) => state.chat);
   const user = useSelector((state) => state.Main.user);
+
+  const date = new Date();
 
   const ref = useRef();
 
@@ -37,6 +42,15 @@ const Message = ({ message }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  const DownloadImage = (src) => {
+    const ele = document.createElement("a");
+    ele.href = src;
+    ele.download = src;
+
+    document.body.appendChild(ele);
+    ele.click();
+  };
+
   return (
     <div
       className={`Message flex flex-row gap-4 ${
@@ -59,9 +73,23 @@ const Message = ({ message }) => {
             : formatTime(message)}
         </span>
       </div>
-      <div className="content bg-[#EAEAEA] p-4 flex flex-col gap-2 rounded-md shadow-sm mt-6">
+      <div className="content bg-[#EAEAEA] p-2 px-4 flex flex-col gap-2 rounded-md shadow-sm mt-6">
         <p>{message?.text}</p>
-        {message.img && <img src={message?.img} alt="img" />}
+        {message.img && (
+          <>
+            <div className="relative mb-2 w-full">
+              <Link
+                className="absolute bottom-0 right-0 p-2 bg-primary text-white text-2xl rounded-tl-md"
+                to={message?.img}
+                target="_blank"
+                download
+              >
+                <RiFolderDownloadFill />
+              </Link>
+              <img src={message?.img} alt="img" />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

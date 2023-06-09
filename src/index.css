@@ -75,7 +75,7 @@ body {
 }
 
 .Message .content img {
-  max-width: 200px;
+  max-width: 400px;
   border-radius: 0.5rem;
   margin-inline: auto;
   /* display: none; */
@@ -83,6 +83,6 @@ body {
 
 @media (max-width: 470px) {
   .Message .content img {
-    max-width: 100px;
+    max-width: 240px;
   }
 }
