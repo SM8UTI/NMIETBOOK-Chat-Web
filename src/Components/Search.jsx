@@ -2,12 +2,25 @@ import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
 import { db } from "../Firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  getDoc,
+} from "firebase/firestore";
+import { useSelector } from "react-redux";
 
 const Search = () => {
   const [user, setUser] = useState("");
   const [userData, setUserData] = useState();
   const [error, setError] = useState(false);
+
+  const currentUser = useSelector((state) => state.Main.user);
 
   const handleSearch = async (e) => {
     setUserData(undefined);
@@ -30,7 +43,43 @@ const Search = () => {
     }
   };
 
-  const handleSelect = () => {};
+  const handleSelect = async () => {
+    const combineId =
+      currentUser.localId > userData.uid
+        ? currentUser.localId + userData.uid
+        : userData.uid + currentUser.localId;
+
+    try {
+      const res = await getDoc(doc(db, "chats", combineId));
+      if (!res.exists()) {
+        await setDoc(doc(db, "chats", combineId), { messages: [] });
+
+        await updateDoc(doc(db, "userChats", currentUser.localId), {
+          [combineId + ".userInfo"]: {
+            uid: userData.uid,
+            displayName: userData.displayName,
+            photoURL: userData.photoURL,
+          },
+          [combineId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", userData.uid), {
+          [combineId + ".userInfo"]: {
+            uid: currentUser.localId,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoUrl,
+          },
+          [combineId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setError(false);
+    }
+
+    setUserData(undefined);
+    setUser("");
+  };
 
   return (
     <div className="Search mt-4">
