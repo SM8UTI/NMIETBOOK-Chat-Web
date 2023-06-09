@@ -77,6 +77,7 @@ const Login = () => {
           <button
             type="submit"
             className="bg-primary text-white py-3 rounded-md mt-4"
+            disabled={loading}
           >
             {loading ? (
               <div className="grid place-content-center">

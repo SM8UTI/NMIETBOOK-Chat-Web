@@ -14,15 +14,19 @@ import { useSelector } from "react-redux";
 
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { ThreeDots } from "react-loader-spinner";
 
 const Input = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   const userChats = useSelector((state) => state.chat);
   const currentUser = useSelector((state) => state.Main.user);
 
   const handleSend = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (img) {
       const storageRef = ref(storage, uuid());
@@ -38,6 +42,8 @@ const Input = () => {
               img: downloadURL,
             }),
           });
+
+          setLoading(false);
         });
       });
     } else {
@@ -49,6 +55,8 @@ const Input = () => {
           date: Timestamp.now(),
         }),
       });
+
+      setLoading(false);
     }
 
     await updateDoc(doc(db, "userChats", currentUser.localId), {
@@ -100,8 +108,23 @@ const Input = () => {
         <button
           type="submit"
           className="bg-primary text-white px-6 py-3 rounded-md transition-all ml-2"
+          disabled={loading}
         >
-          <RiSendPlane2Fill />
+          {loading ? (
+            <div className="grid place-content-center">
+              <ThreeDots
+                height="20"
+                width="20"
+                radius="9"
+                color="#fff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                visible={true}
+              />
+            </div>
+          ) : (
+            <RiSendPlane2Fill />
+          )}
         </button>
       </form>
     </div>
