@@ -13,7 +13,19 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const [error, setError] = useState();
+  const [errorData, setErrorData] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const errorHandling = (e) => {
+    if (e === "Firebase: Error (auth/email-already-in-use).") {
+      return "email already in use";
+    } else if (e === "Firebase: Error (auth/user-not-found).") {
+      return "User not Found !!!";
+    } else if (e === "Firebase: Error (auth/wrong-password).") {
+      return "Wrong Password !!!";
+    }
+    return e;
+  };
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -32,7 +44,8 @@ const Login = () => {
     } catch (error) {
       setError(true);
       setLoading(false);
-      toast.error("Somthing is Wrong!!!");
+      setErrorData(error.message);
+      toast.error(`${errorHandling(error.message)}`);
     }
   };
 
@@ -97,7 +110,9 @@ const Login = () => {
           </button>
         </form>
         {error && (
-          <span className="text-base text-red-500">Something is Wrong!!!</span>
+          <span className="text-base text-red-500">
+            {errorHandling(errorData)}
+          </span>
         )}
         <div>
           <h4 className="font-normal text-sm">

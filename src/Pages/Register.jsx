@@ -15,8 +15,16 @@ import { ThreeDots } from "react-loader-spinner";
 const Register = () => {
   const [files, setFiles] = useState();
   const [error, setError] = useState(false);
+  const [errorData, setErrorData] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const errorHandling = (e) => {
+    if (e === "Firebase: Error (auth/email-already-in-use).") {
+      return "email already in use";
+    }
+    return "Something is Wrong !!!";
+  };
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -50,17 +58,18 @@ const Register = () => {
 
             navigate("/login");
           } catch (error) {
-            console.log(error);
             setError(true);
             setLoading(false);
-            toast.error("Something Went Wrong !!!");
+            setErrorData(error.message);
+            toast.error(`${errorHandling(error.message)}`);
           }
         });
       });
     } catch (error) {
       setError(true);
       setLoading(false);
-      toast.error("Something Went Wrong !!!");
+      setErrorData(error.message);
+      toast.error(`${errorHandling(error.message)}`);
     }
   };
 
@@ -168,7 +177,9 @@ const Register = () => {
           </span>
         )}
         {error && (
-          <span className="text-base text-red-500">Something is Wrong!!!</span>
+          <span className="text-base text-red-500">
+            {errorHandling(errorData)}
+          </span>
         )}
         <div>
           <h4 className="font-normal text-sm">
