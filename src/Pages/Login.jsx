@@ -8,6 +8,8 @@ import { updateUser } from "../Store/Slice/MainSlice";
 import { toast } from "react-hot-toast";
 import { ThreeDots } from "react-loader-spinner";
 
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,6 +17,8 @@ const Login = () => {
   const [error, setError] = useState();
   const [errorData, setErrorData] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const errorHandling = (e) => {
     if (e === "Firebase: Error (auth/email-already-in-use).") {
@@ -35,6 +39,7 @@ const Login = () => {
 
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
+      console.log(res);
       dispatch(updateUser(res.user.reloadUserInfo));
       toast(`Welcome Back!, ${res.user.displayName}`, {
         icon: "🙏",
@@ -76,16 +81,22 @@ const Login = () => {
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black  w-full"
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 relative">
             <label htmlFor="password" className="text-sm opacity-80">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               placeholder="*****"
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black w-full "
             />
+            <div
+              className="absolute bottom-2 right-2 text-2xl text-black opacity-80 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+            </div>
           </div>
           <button
             type="submit"
