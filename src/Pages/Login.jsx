@@ -26,7 +26,7 @@ const Login = () => {
     } else if (e === "Firebase: Error (auth/user-not-found).") {
       return "User not Found !!!";
     } else if (e === "Firebase: Error (auth/wrong-password).") {
-      return "Wrong Password !!!";
+      return `Wrong Password !!!`;
     }
     return e;
   };
@@ -39,7 +39,6 @@ const Login = () => {
 
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
-      console.log(res);
       dispatch(updateUser(res.user.reloadUserInfo));
       toast(`Welcome Back!, ${res.user.displayName}`, {
         icon: "🙏",
@@ -81,26 +80,34 @@ const Login = () => {
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black  w-full"
             />
           </div>
-          <div className="flex flex-col gap-2 relative">
-            <label htmlFor="password" className="text-sm opacity-80">
-              Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              placeholder="*****"
-              className="border-2 border-slate-500 p-2 rounded-md text-sm text-black w-full "
-            />
-            <div
-              className="absolute bottom-2 right-2 text-2xl text-black opacity-80 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+          <div>
+            <div className="flex flex-col gap-2 relative mb-2">
+              <label htmlFor="password" className="text-sm opacity-80">
+                Password
+              </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="*****"
+                className="border-2 border-slate-500 p-2 rounded-md text-sm text-black w-full "
+              />
+              <div
+                className="absolute bottom-2 right-2 text-2xl text-black opacity-80 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </div>
             </div>
+            <Link
+              to={"/reset"}
+              className="text-sm w-full flex justify-end text-primary underline"
+            >
+              Forget Password?
+            </Link>
           </div>
           <button
             type="submit"
-            className="bg-primary text-white py-3 rounded-md mt-4"
+            className="bg-primary text-white py-3 rounded-md"
             disabled={loading}
           >
             {loading ? (

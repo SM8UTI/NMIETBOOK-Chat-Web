@@ -14,25 +14,29 @@ body {
 
 .Register,
 .login,
-.Home {
+.Home,
+.PasswordReset {
   background-color: #85ffbd;
   background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
 }
 
 .Register > *,
-.login > * {
+.login > *,
+.PasswordReset > * {
   transition: all 0.6s cubic-bezier(0.18, 0.37, 0.42, 1.01);
 }
 
 .Register .container,
 .login .container,
-.Home .container {
+.Home .container,
+.PasswordReset .container {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
 .Register input:focus,
-.login input:focus {
+.login input:focus,
+.PasswordReset input:focus {
   border: 2px solid transparent;
   outline: none;
   box-shadow: 0 0 0 4px #1d633fb9;
@@ -42,7 +46,9 @@ body {
 .login button:hover,
 .login button:focus,
 .Input button:focus,
-.Input button:hover {
+.Input button:hover,
+.PasswordReset button:hover,
+.PasswordReset button:focus {
   outline: none;
   box-shadow: 0 0 0 4px #1d633fb9;
 }

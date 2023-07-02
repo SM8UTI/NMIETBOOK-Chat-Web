@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import Store from "./Store/Store.jsx";
 import PrivateRouter from "./Router/PrivateRouter.jsx";
 import { Toaster } from "react-hot-toast";
+import PasswordReset from "./Pages/PasswordReset.jsx";
 
 const AppRouter = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const AppRouter = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/reset",
+    element: <PasswordReset />,
   },
 ]);
 
