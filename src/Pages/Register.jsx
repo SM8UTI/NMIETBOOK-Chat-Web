@@ -17,6 +17,8 @@ const Register = () => {
   const [error, setError] = useState(false);
   const [errorData, setErrorData] = useState("");
   const [loading, setLoading] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
   const navigate = useNavigate();
 
   const errorHandling = (e) => {
@@ -145,14 +147,19 @@ const Register = () => {
               className="hidden"
               onChange={(e) => {
                 setFiles(e.target.value);
+                if (e.target.files) {
+                  setButtonDisabled(false);
+                }
               }}
               required
             />
           </div>
           <button
             type="submit"
-            className="bg-primary text-white py-3 rounded-md"
-            disabled={loading}
+            className={`bg-primary ${
+              buttonDisabled ? "opacity-50 cursor-not-allowed " : "opacity-100"
+            } text-white py-3 rounded-md`}
+            disabled={buttonDisabled}
           >
             {loading ? (
               <div className="grid place-content-center">

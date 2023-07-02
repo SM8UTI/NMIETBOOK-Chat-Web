@@ -15,6 +15,8 @@ const PasswordReset = () => {
 
   const [emailSent, setEmailSent] = useState(false);
 
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
   const errorHandling = (e) => {
     if (e === "Firebase: Error (auth/email-already-in-use).") {
       return "email already in use";
@@ -29,6 +31,7 @@ const PasswordReset = () => {
   };
 
   const handleSubmit = async (e) => {
+    setEmailSent(true);
     setError(false);
     setLoading(true);
     setErrorData(undefined);
@@ -36,20 +39,25 @@ const PasswordReset = () => {
 
     const email = e.target[0].value.trim().trim().toLowerCase();
 
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        setEmailSent(true);
-        setLoading(false);
-        toast("Email Sent!!!", {
-          icon: "✉️",
+    if (email) {
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          setLoading(false);
+          toast("Email Sent!!!", {
+            icon: "✉️",
+          });
+          setEmailSent(true);
+        })
+        .catch((error) => {
+          setEmailSent(false);
+          setError(true);
+          setErrorData(errorHandling(error.message));
+          setLoading(false);
         });
-      })
-      .catch((error) => {
-        setEmailSent(false);
-        setError(true);
-        setErrorData(errorHandling(error.message));
-        setLoading(false);
-      });
+    } else {
+      setLoading(false);
+      setButtonDisabled(true);
+    }
   };
 
   return (
@@ -73,15 +81,27 @@ const PasswordReset = () => {
               id="email"
               placeholder="John123@gmail.com"
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black  w-full"
+              onChange={(e) => {
+                if (e.target.value) {
+                  setButtonDisabled(false);
+                }
+              }}
             />
           </div>
-          <div className="text-sm text-red-400 text-center">
+          <div
+            className={`text-sm text-center opacity-80 ${
+              error ? "text-red-500" : "text-primary"
+            }`}
+          >
             {error && errorData}
+            {emailSent && "Check your Email !!!"}
           </div>
           <button
             type="submit"
-            className="bg-primary text-white py-3 rounded-md"
-            disabled={loading}
+            className={`bg-primary ${
+              buttonDisabled ? "opacity-50 cursor-not-allowed " : "opacity-100"
+            } text-white py-3 rounded-md`}
+            disabled={buttonDisabled}
           >
             {loading ? (
               <div className="grid place-content-center">
@@ -95,8 +115,6 @@ const PasswordReset = () => {
                   visible={true}
                 />
               </div>
-            ) : emailSent ? (
-              "Check Your Email"
             ) : (
               "Reset Password"
             )}

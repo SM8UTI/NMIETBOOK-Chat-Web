@@ -14,11 +14,13 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
   const [errorData, setErrorData] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const errorHandling = (e) => {
     if (e === "Firebase: Error (auth/email-already-in-use).") {
@@ -27,29 +29,38 @@ const Login = () => {
       return "User not Found !!!";
     } else if (e === "Firebase: Error (auth/wrong-password).") {
       return `Wrong Password !!!`;
+    } else if (e === "Firebase: Error (auth/invalid-email).") {
+      return `Enter Your Email !!!`;
     }
     return e;
   };
 
   const handleSubmit = async (e) => {
+    setError(false);
+    setErrorData(undefined);
     setLoading(true);
     e.preventDefault();
     const email = e.target[0].value.trim().toLowerCase();
     const password = e.target[1].value.trim();
 
-    try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(updateUser(res.user.reloadUserInfo));
-      toast(`Welcome Back!, ${res.user.displayName}`, {
-        icon: "🙏",
-      });
+    if (email) {
+      try {
+        const res = await signInWithEmailAndPassword(auth, email, password);
+        dispatch(updateUser(res.user.reloadUserInfo));
+        toast(`Welcome Back!, ${res.user.displayName}`, {
+          icon: "🙏",
+        });
 
-      navigate("/");
-    } catch (error) {
-      setError(true);
+        navigate("/");
+      } catch (error) {
+        setError(true);
+        setLoading(false);
+        setErrorData(error.message);
+        toast.error(`${errorHandling(error.message)}`);
+      }
+    } else {
       setLoading(false);
-      setErrorData(error.message);
-      toast.error(`${errorHandling(error.message)}`);
+      setButtonDisabled(true);
     }
   };
 
@@ -78,6 +89,11 @@ const Login = () => {
               id="email"
               placeholder="John123@gmail.com"
               className="border-2 border-slate-500 p-2 rounded-md text-sm text-black  w-full"
+              onChange={(e) => {
+                if (e.target.value) {
+                  setButtonDisabled(false);
+                }
+              }}
             />
           </div>
           <div>
@@ -98,17 +114,18 @@ const Login = () => {
                 {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
               </div>
             </div>
-            <Link
-              to={"/reset"}
-              className="text-sm w-full flex justify-end text-primary underline"
-            >
-              Forget Password?
-            </Link>
+            <div className="flex flex-row justify-end">
+              <Link to={"/reset"} className="text-sm  text-primary underline">
+                Forget Password?
+              </Link>
+            </div>
           </div>
           <button
             type="submit"
-            className="bg-primary text-white py-3 rounded-md"
-            disabled={loading}
+            className={`bg-primary ${
+              buttonDisabled ? "opacity-50 cursor-not-allowed " : "opacity-100"
+            } text-white py-3 rounded-md`}
+            disabled={buttonDisabled}
           >
             {loading ? (
               <div className="grid place-content-center">

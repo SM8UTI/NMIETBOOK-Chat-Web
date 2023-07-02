@@ -47,7 +47,6 @@ body {
 .login button:focus,
 .Input button:focus,
 .Input button:hover,
-.PasswordReset button:hover,
 .PasswordReset button:focus {
   outline: none;
   box-shadow: 0 0 0 4px #1d633fb9;
