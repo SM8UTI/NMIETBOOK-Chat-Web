@@ -12,6 +12,8 @@ import PrivateRouter from "./Router/PrivateRouter.jsx";
 import { Toaster } from "react-hot-toast";
 import PasswordReset from "./Pages/PasswordReset.jsx";
 
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+
 const AppRouter = createBrowserRouter([
   {
     path: "/",
@@ -53,3 +55,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </Provider>
   </React.StrictMode>
 );
+
+serviceWorkerRegistration.register();

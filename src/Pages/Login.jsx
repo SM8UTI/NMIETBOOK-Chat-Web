@@ -31,6 +31,8 @@ const Login = () => {
       return `Wrong Password !!!`;
     } else if (e === "Firebase: Error (auth/invalid-email).") {
       return `Enter Your Email !!!`;
+    } else if (e === "Firebase: Error (auth/missing-password).") {
+      return "Missing Password";
     }
     return e;
   };

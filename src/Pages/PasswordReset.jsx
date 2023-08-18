@@ -26,6 +26,8 @@ const PasswordReset = () => {
       return `Wrong Password !!!`;
     } else if (e === "Firebase: Error (auth/missing-email).") {
       return `Enter Your Email !!!`;
+    } else if (e === "Firebase: Error (auth/missing-password).") {
+      return "Missing Password";
     }
     return e;
   };
